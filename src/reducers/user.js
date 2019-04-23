@@ -1,4 +1,4 @@
-import { FETCH_USER_SUCCESS, FETCH_USER_REQUEST, FETCH_USER_FAILURE } from '../constans/index';
+import { FETCH_USER_SUCCESS, FETCH_USER_REQUEST, FETCH_USER_FAILURE, LOAD_USER_FULFILLED, LOAD_USER_REJECTED, LOAD_USER_PENDING } from '../constans/index';
 
 const initialState = {
   isFetching: false,
@@ -6,27 +6,28 @@ const initialState = {
   user:{}
 };
 
-export default (state = initialState, { type, user, error }) => {
+export default (state = initialState, { type, user, error, payload }) => {
   switch (type) {
 
-  case FETCH_USER_SUCCESS:
+  case LOAD_USER_FULFILLED:
     return { 
       isFetching: false,
       error: null,
-      user: user
+      user: payload.data.results[0].email
     };
   
-  case FETCH_USER_REQUEST:
+  case LOAD_USER_PENDING:
     return { 
     isFetching: true,
       error: null,
       user: {}
     };
 
-  case FETCH_USER_FAILURE:
+  case LOAD_USER_REJECTED:
+    console.log(payload);
     return { 
     isFetching: false,
-      error: error,
+      error: payload.message,
       user: {}
     };
 
