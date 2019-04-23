@@ -7,6 +7,8 @@ import {createStore, applyMiddleware} from 'redux';
 // 引入外部中間件
 import logger from 'redux-logger';
 
+// thunk
+import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import { increment, decrement } from './actions/action';
 import { Provider } from "react-redux";
@@ -39,7 +41,7 @@ const logger_exp = function(store){
 }
 
 //中間件日誌紀錄
-const store = createStore(rootReducer, {}, applyMiddleware(logger)); //依序執行
+const store = createStore(rootReducer, {}, applyMiddleware(logger, thunk)); //依序執行
 
 
 

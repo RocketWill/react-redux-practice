@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import './App.css';
 import * as types from './actions/action';
 import {bindActionCreators} from 'redux';
+import User from './components/User';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class App extends Component {
@@ -23,6 +24,8 @@ class App extends Component {
           <button className="btn btn-primary mr-2" onClick={ () => increment("YONGGG") }>Increase</button>
           <button className="btn btn-danger mr-2" onClick={() => decrement()}>Decrease</button>
         </p>
+
+        <User />
       </div>
     );
   }

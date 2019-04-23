@@ -1,10 +1,11 @@
-const initialState = 'will cheng';
+import { FETCH_USER_SUCCESS } from '../constans/index';
 
-export default (state = initialState, { type, payload }) => {
+
+export default (state = {}, { type, user }) => {
   switch (type) {
 
-//   case typeName:
-//     return { ...state, ...payload }
+  case FETCH_USER_SUCCESS:
+    return { user }
 
   default:
     return state
