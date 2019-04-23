@@ -5,6 +5,7 @@ export default (state = initialState, { type, payload }) => {
 
   case 'INCREMENT':
     console.log(payload);
+    //throw new Error('Error in Increment');
     return state + 1;
 
 case 'DECREMENT':
