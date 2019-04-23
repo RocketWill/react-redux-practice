@@ -2,9 +2,16 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import './App.css';
-import { increment, decrement } from './actions/action';
+import * as types from './actions/action';
 import {bindActionCreators} from 'redux';
+
+@connect(mapStateToProps, mapDispatchToProps)
 class App extends Component {
+  static propTypes = {
+    counter: PropTypes.number.isRequired,
+    increment: PropTypes.func.isRequired,
+    decrement: PropTypes.func.isRequired,
+  }
   render(){
     // const {dispatch} = this.props;
     const {increment, decrement} = this.props;
@@ -31,9 +38,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators({increment}, dispatch);
-// }
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(types, dispatch);
+}
 
 
-export default connect(mapStateToProps, {increment, decrement})(App);
+// export default connect(mapStateToProps, {increment, decrement})(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
