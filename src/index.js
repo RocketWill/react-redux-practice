@@ -11,6 +11,9 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import promise from 'redux-promise-middleware';
+
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 import rootReducer from './reducers';
 import { increment, decrement } from './actions/action';
 import { Provider } from "react-redux";
@@ -43,8 +46,17 @@ const logger_exp = function(store){
 }
 
 //中間件日誌紀錄
-const store = createStore(rootReducer, {}, applyMiddleware(logger, thunk, promise)); //依序執行
+//const store = createStore(rootReducer, {}, applyMiddleware(logger, thunk, promise)); //依序執行
+const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(logger, thunk, promise)));
 
+//HMR
+if (process.env.NODE_ENV !== "production") {
+    if (module.hot) {
+      module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer)
+      })
+    }
+  }
 
 
 //store.subscribe( () => console.log("State Update!", store.getState()) );
@@ -54,6 +66,20 @@ ReactDOM.render(
         <App /> 
     </Provider>,
     document.getElementById('root'))
+
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    ReactDOM.render(
+      <Provider store={ store }>
+        <App />
+      </Provider>,
+      document.getElementById('root')
+    );
+  })
+}
+
+//只在生產環境生效
+//registerServiceWorker();
     
 
 
